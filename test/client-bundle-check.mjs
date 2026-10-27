@@ -67,6 +67,19 @@ function textOf(node) {
 }
 
 const page = Page({ view: 'page', form })
+function formState(overrides) {
+  return Page({ view: 'page', form: { ...form, state: { ...form.state, value: { ...value, ...overrides } } } }).props.state
+}
+for (const fakeIpRanges of [['1:2/64'], ['198.018.0.0/16']]) {
+  assert.equal(formState({ fakeIpRanges }).invalid, true)
+}
+for (const fakeIpRanges of [['fd00::/8'], ['::ffff:192.0.2.1/128']]) {
+  assert.equal(formState({ fakeIpRanges }).invalid, false)
+}
+for (const overrides of [{ timeoutMs: 0 }, { timeoutMs: 2147483648 }, { maxResponseBytes: 0 }, { maxBodyChars: 0 }, { userAgent: 'a\nb' }]) {
+  assert.equal(formState(overrides).invalid, true)
+}
+assert.equal(formState({ maxRedirects: 0, timeoutMs: 2147483647 }).invalid, false)
 const pageText = textOf(page)
 for (const expected of ['运行状态', 'Fake-IP 网段', '198.18.0.0/16', '探测本机 DNS', '自检', '高级传输设置', '待自检']) {
   assert.ok(pageText.includes(expected), `page must render ${expected}`)

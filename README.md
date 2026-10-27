@@ -31,7 +31,13 @@
 
 ## 安装
 
-在 DSH 插件页安装本地包：
+发布到 npm 后，可以通过 CLI 安装到指定 profile：
+
+```bash
+dsh plugin --profile <profile> add dsh-fakeip-fetch --ignore-scripts --config.auto-install-peers=false
+```
+
+也可以安装本地打包文件。在项目目录运行 `npm pack` 后，在 DSH 插件页填写：
 
 ```text
 file:/absolute/path/to/dsh-fakeip-fetch-0.5.2.tgz
