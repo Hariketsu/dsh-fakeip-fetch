@@ -70,13 +70,13 @@ dsh plugin --profile <profile> add /path/to/dsh-fakeip-fetch-<version>.tgz \
 
 ## 工作原理与兼容性
 
-DSH 的 HTTP provider 会将 Fake-IP 模式下解析到代理使用的虚拟地址视为非公网地址并拒绝请求。
+- DSH 的 HTTP provider 会将 Fake-IP 模式下解析到代理使用的虚拟地址视为非公网地址并拒绝请求。
 
-插件使用 DSH 的 HTTP 传输实现，保留 TLS、同源重定向、超时和响应大小等限制。
+- 使用 DSH 的 HTTP 传输实现，保留 TLS、同源重定向、超时和响应大小等限制。
 
-插件依赖的地址解析器参数不是公开的插件 API：目前已在 DSH Desktop `0.2.1-rc.3`上测试，其他 DSH 版本或构建尚未验证。
+- 依赖的地址解析器参数不是公开的插件 API：目前已在 DSH Desktop `0.2.1-rc.3`上测试，其他 DSH 版本或构建尚未验证。
 
-插件针对 TUN Fake-IP 模式；使用 `redir-host` 模式时通常不需要它。跨源重定向沿用 DSH 的限制，需要直接请求目标 URL。
+- 针对 TUN Fake-IP 模式；使用 `redir-host` 模式时通常不需要它。跨源重定向沿用 DSH 的限制，需要直接请求目标 URL。
 
 ## 安全与网络行为
 
@@ -86,15 +86,15 @@ DSH 的 HTTP provider 会将 Fake-IP 模式下解析到代理使用的虚拟地�
 
 ## 常见问题
 
-**提示 `cannot register the "http" fetch provider`**
+1. **提示 `cannot register the "http" fetch provider`**
 
 当前 profile 中有另一个插件注册了 `http` provider。检查是否仍安装着 `dsh-local-fetch`，卸载后重启。
 
-**提示地址不在配置的 Fake-IP 网段中**
+2. **提示地址不在配置的 Fake-IP 网段中**
 
 检查代理的 Fake-IP 网段是否与插件设置一致。可以使用设置页的「探测本机 DNS」查看解析结果。
 
-**自检显示 `resolver=unsupported`**
+3. **自检显示 `resolver=unsupported`**
 
 当前 DSH 构建不支持插件使用的地址解析器参数。插件会使用普通 HTTP 抓取，但无法处理 Fake-IP 地址。
 
