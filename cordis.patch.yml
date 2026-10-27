@@ -1,0 +1,17 @@
+# Replace the built-in local HTTP fetch row with this plugin's row. The module
+# name is an assertion on the built-in row, so the replacement is written as a
+# disable plus an insert (the Loader rejects renaming that row).
+- id: web-fetch-http
+  name: '@deepseek-ai/dsh-web-fetch-http'
+  disabled: true
+- insert:
+    - id: fakeip-fetch
+      name: dsh-fakeip-fetch
+      config:
+        fakeIpRanges:
+          - 198.18.0.0/16
+        maxResponseBytes: 5000000
+        maxBodyChars: 100000
+        timeoutMs: 30000
+        maxRedirects: 5
+        userAgent: deepseek-harness/0.0.1

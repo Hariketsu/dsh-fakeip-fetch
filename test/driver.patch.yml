@@ -1,0 +1,3 @@
+- insert:
+    - id: fakeip-fetch-driver
+      name: /absolute/path/to/dsh-fakeip-fetch/test/driver.mjs
